@@ -20,7 +20,7 @@ import frc.robot.Constants.SpinState;
 
 public class Shooter extends SubsystemBase {  
     private CANSparkBase angleMotorController, shooterMLeftController, shooterMRightController, neckMotorController;
-    private PIDController pidController;
+    private PIDController anglePIDController;
     //test shooter angle accuracy
     private double targetPitch = 0.0;
 
@@ -30,7 +30,7 @@ public class Shooter extends SubsystemBase {
         shooterMRightController= new CANSparkFlex(Constants.Shooter.shooterMRightID,CANSparkLowLevel.MotorType.kBrushless);
         shooterMRightController.follow(shooterMLeftController, true); // for now, no spin.
         neckMotorController = new CANSparkMax(Constants.Shooter.neckMotorID, CANSparkLowLevel.MotorType.kBrushless);
-        pidController = new PIDController(Constants.Shooter.kP, Constants.Shooter.kI, Constants.Shooter.kD);
+        anglePIDController = new PIDController(Constants.Shooter.kP, Constants.Shooter.kI, Constants.Shooter.kD);
     }
 
     /** @return radians */
@@ -40,10 +40,10 @@ public class Shooter extends SubsystemBase {
 
     /** @param goalPitch radians */
     public void setGoalPitch(double goalPitch) {
-        goalPitch = MathUtil.clamp(goalPitch/*  + Constants.Shooter.pitchOffset*/, Constants.Shooter.restingPitch, Constants.Shooter.maximumPitch);
+        goalPitch = MathUtil.clamp(goalPitch/*  + Constants.Shooter.pitchOffset*/, 1 - Constants.Shooter.pitchOffset, Constants.Shooter.maximumPitch);
         //angleMotorController.getPIDController().setReference(Units.radiansToRotations(goalPitch) + Constants.Shooter.pitchOffset, CANSparkBase.ControlType.kSmartMotion);
         double ff = Constants.Shooter.kF * Math.cos(this.getPitch()); 
-        double motorSpeed = pidController.calculate(this.getPitch(), goalPitch) + ff;
+        double motorSpeed = anglePIDController.calculate(this.getPitch(), goalPitch) + ff;
         angleMotorController.set(motorSpeed);
         targetPitch = Units.radiansToDegrees(goalPitch);
     }
@@ -81,8 +81,8 @@ public class Shooter extends SubsystemBase {
     @Override
     public void periodic(){
         //TODO: remove once done testing pitch accuracy
-        SmartDashboard.putNumber("Encoder Angle", Units.radiansToDegrees(getPitch()));
-        SmartDashboard.putNumber("Goal Position", targetPitch);
+        SmartDashboard.putNumber("Shooter Pitch", Units.radiansToDegrees(getPitch()));
+        SmartDashboard.putNumber("Shooter Goal", targetPitch);
     }
 
     public class ChangeState extends Command {

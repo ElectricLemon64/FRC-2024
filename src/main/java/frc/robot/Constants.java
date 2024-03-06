@@ -188,6 +188,12 @@ public final class Constants {
             }
         }
 
+        //PID constants
+        public static final double kP = 0.5;
+        public static final double kI = 0.0;
+        public static final double kD = 0.0;
+        public static final double kF = 0.0;
+
         public static final Translation3d luxonisTranslation = new Translation3d(); // TODO: This must be tuned to specific robot
     } 
 
@@ -202,7 +208,7 @@ public final class Constants {
         public static final double spinTolerance = Math.PI/256;
 
         //public static final double restingPitch = Units.rotationsToRadians(0.032); // radians
-        public static final double restingPitch = Units.degreesToRadians(15.4);
+        //public static final double restingPitch = Units.degreesToRadians(15.4);
         public static final double maximumPitch = Math.PI/2; // radians
         public static final double neckSpeed = 0.3; // volts / 12, -1 to 1
         public static final double pitchOffset = Units.degreesToRotations(-3);
@@ -231,13 +237,6 @@ public final class Constants {
                 this.pitch = p;
             }
         }
-    }
-
-    public static final class Climber{
-        public static final int climbMotor1ID = 9;
-        public static final int climbMotor2ID = 10;
-
-        public static final double climberSpeed = 0.5;
     }
 
     public static final class CommandConstants {
