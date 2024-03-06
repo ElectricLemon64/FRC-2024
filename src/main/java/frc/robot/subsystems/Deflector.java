@@ -11,20 +11,24 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Deflector extends SubsystemBase{
-    private CANSparkMax angleMotorController;
+    private CANSparkMax angleMotorControllerL;
+    private CANSparkMax angleMotorControllerR;
 
     public Deflector(){
-        angleMotorController = new CANSparkMax(Constants.DeflectorConstants.angleMotorID, MotorType.kBrushless);
+        angleMotorControllerL = new CANSparkMax(Constants.DeflectorConstants.angleMotorIDL, MotorType.kBrushless);
+        angleMotorControllerR = new CANSparkMax(Constants.DeflectorConstants.angleMotorIDR, MotorType.kBrushless);
+        angleMotorControllerR.follow(angleMotorControllerL);
+        angleMotorControllerR.setInverted(true);
     }
 
     /** @return radians */
     public double getPitch() {
-        return Units.rotationsToRadians(angleMotorController.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle).getPosition());
+        return Units.rotationsToRadians(angleMotorControllerL.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle).getPosition());
     }
     
     /** @param goalPitch radians */
     private void setGoalPitch(double goalPitch) {
-        angleMotorController.getPIDController().setReference(Units.radiansToRotations(goalPitch), CANSparkBase.ControlType.kSmartMotion);
+        angleMotorControllerL.getPIDController().setReference(Units.radiansToRotations(goalPitch), CANSparkBase.ControlType.kSmartMotion);
     }
 
     public class ChangeState extends Command{

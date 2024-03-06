@@ -225,7 +225,8 @@ public final class Constants {
     }
 
     public static final class DeflectorConstants {
-        public static final int angleMotorID = 8;
+        public static final int angleMotorIDL = 8;
+        public static final int angleMotorIDR = 9;
         public static final double deflectorTolerance = Math.PI/256;
         public static enum DeflectorState{
             UP(Math.PI * 2.0/3.0),
