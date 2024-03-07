@@ -6,6 +6,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -189,6 +190,9 @@ public final class Constants {
         }
 
         public static final Translation3d luxonisTranslation = new Translation3d(); // TODO: This must be tuned to specific robot
+    
+        public static final PIDController anglePIDController = new PIDController(0.7, 0, 0);
+        public static final double kF = 0.0;
     } 
 
     public static final class Shooter {
@@ -212,14 +216,13 @@ public final class Constants {
 
         //Angle motor PID constans
         //TODO: set and tune constants
-        public static final double kP = 0.7;
-        public static final double kI = 0.0;
-        public static final double kD = 0.0;
+        public static final PIDController anglePIDController = new PIDController(0.7, 0, 0);
         public static final double kF = 0.0;
     }
 
     public static final class DeflectorConstants {
-        public static final int angleMotorID = 8;
+        public static final int angleMotorLID = 8;
+        public static final int angleMotorRID = 9;
         public static final double deflectorTolerance = Math.PI/256;
         public static enum DeflectorState{
             UP(Math.PI * 2.0/3.0),
@@ -231,13 +234,6 @@ public final class Constants {
                 this.pitch = p;
             }
         }
-    }
-
-    public static final class Climber{
-        public static final int climbMotor1ID = 9;
-        public static final int climbMotor2ID = 10;
-
-        public static final double climberSpeed = 0.5;
     }
 
     public static final class CommandConstants {

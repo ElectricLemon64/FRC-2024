@@ -20,7 +20,6 @@ import frc.robot.Constants.SpinState;
 
 public class Shooter extends SubsystemBase {  
     private CANSparkBase angleMotorController, shooterMLeftController, shooterMRightController, neckMotorController;
-    private PIDController pidController;
     //test shooter angle accuracy
     private double targetPitch = 0.0;
 
@@ -30,7 +29,6 @@ public class Shooter extends SubsystemBase {
         shooterMRightController= new CANSparkFlex(Constants.Shooter.shooterMRightID,CANSparkLowLevel.MotorType.kBrushless);
         shooterMRightController.follow(shooterMLeftController, true); // for now, no spin.
         neckMotorController = new CANSparkMax(Constants.Shooter.neckMotorID, CANSparkLowLevel.MotorType.kBrushless);
-        pidController = new PIDController(Constants.Shooter.kP, Constants.Shooter.kI, Constants.Shooter.kD);
     }
 
     /** @return radians */
@@ -43,7 +41,7 @@ public class Shooter extends SubsystemBase {
         goalPitch = MathUtil.clamp(goalPitch/*  + Constants.Shooter.pitchOffset*/, Constants.Shooter.restingPitch, Constants.Shooter.maximumPitch);
         //angleMotorController.getPIDController().setReference(Units.radiansToRotations(goalPitch) + Constants.Shooter.pitchOffset, CANSparkBase.ControlType.kSmartMotion);
         double ff = Constants.Shooter.kF * Math.cos(this.getPitch()); 
-        double motorSpeed = pidController.calculate(this.getPitch(), goalPitch) + ff;
+        double motorSpeed = Constants.Shooter.anglePIDController.calculate(this.getPitch(), goalPitch) + ff;
         angleMotorController.set(motorSpeed);
         targetPitch = Units.radiansToDegrees(goalPitch);
     }
