@@ -43,6 +43,7 @@ public class Shooter extends SubsystemBase {
             + Constants.Shooter.kF * Math.cos(getPitch())
             + Constants.Shooter.pitchOffset
         );
+        targetPitch = Units.radiansToDegrees(goalPitch);
         //angleMotorController.getPIDController().setReference(Units.radiansToRotations(goalPitch) + Constants.Shooter.pitchOffset, CANSparkBase.ControlType.kSmartMotion);
     }
 
