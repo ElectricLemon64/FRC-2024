@@ -205,18 +205,17 @@ public final class Constants {
         public static final double pitchTolerance = Math.PI/512;
         public static final double spinTolerance = Math.PI/256;
 
-        //public static final double restingPitch = Units.rotationsToRadians(0.032); // radians
-        public static final double restingPitch = Units.degreesToRadians(15.4);
-        public static final double maximumPitch = Math.PI/2; // radians
-        public static final double neckSpeed = 0.3; // volts / 12, -1 to 1
         public static final double pitchOffset = Units.degreesToRotations(-3);
+        public static final double minimumPitch = Units.degreesToRadians(17);
+        public static final double maximumPitch = Units.rotationsToRadians(0.2);
+        public static final double neckSpeed = 0.3; // volts / 12, -1 to 1
         
         /** @param shooterFeedForward kS radians / second, kV radians / second per meter / second */
         public static final SimpleMotorFeedforward shooterFeedForward = new SimpleMotorFeedforward(-41.57843503917089, 28.371771957538527);
 
         //Angle motor PID constans
         //TODO: set and tune constants
-        public static final PIDController anglePIDController = new PIDController(0.7, 0, 0);
+        public static final PIDController shooterPID = new PIDController(0.7, 0, 0);
         public static final double kF = 0.0;
     }
 
@@ -240,7 +239,6 @@ public final class Constants {
         public static final double bumperWidth = Units.inchesToMeters(2.75);
 
         public static final double shooterSpinMax = 30; // meters / second
-        public static final double shooterHandoffAngle = Units.rotationsToRadians(0.04);
         public static final double speakerShooterAngleMax = Units.rotationsToRadians(0.2);
         public static final double speakerShooterAngleMin = Units.rotationsToRadians(0.0);
         public static final double speakerAutoOmegaMax = Units.degreesToRadians(15);
