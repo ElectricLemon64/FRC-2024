@@ -190,9 +190,6 @@ public final class Constants {
         }
 
         public static final Translation3d luxonisTranslation = new Translation3d(); // TODO: This must be tuned to specific robot
-    
-        public static final PIDController anglePIDController = new PIDController(0.7, 0, 0);
-        public static final double kF = 0.0;
     } 
 
     public static final class Shooter {
@@ -217,22 +214,6 @@ public final class Constants {
         //TODO: set and tune constants
         public static final PIDController shooterPID = new PIDController(0.7, 0, 0);
         public static final double kF = 0.0;
-    }
-
-    public static final class DeflectorConstants {
-        public static final int angleMotorLID = 8;
-        public static final int angleMotorRID = 9;
-        public static final double deflectorTolerance = Math.PI/256;
-        public static enum DeflectorState{
-            UP(Math.PI * 2.0/3.0),
-            DOWN(0);
-
-            /** @param p radians */
-            public final double pitch;
-            private DeflectorState(double p){
-                this.pitch = p;
-            }
-        }
     }
 
     public static final class CommandConstants {
