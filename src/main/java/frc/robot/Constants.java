@@ -191,7 +191,7 @@ public final class Constants {
 
         public static final Translation3d luxonisTranslation = new Translation3d(); // TODO: This must be tuned to specific robot
     
-        public static final PIDController anglePIDController = new PIDController(0.7, 0, 0);
+        public static final PIDController anglePIDController = new PIDController(0.1, 0, 0);
         public static final double kF = 0.0;
     } 
 
