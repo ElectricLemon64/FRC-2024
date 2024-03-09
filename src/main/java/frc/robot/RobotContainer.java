@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.Intake.IntakeState;
 import frc.robot.Constants.SpinState;
+import frc.robot.Constants.DeflectorConstants.DeflectorState;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -31,6 +32,8 @@ public class RobotContainer {
     private static final JoystickButton manualShoot = new JoystickButton(secondary, 1);
     private static final JoystickButton manualIntake = new JoystickButton(secondary, 2);
     private static final JoystickButton manualOuttake = new JoystickButton(secondary, 3);
+    // FOR TESTING REMOVE LATER
+    private static final JoystickButton deflectorTest = new JoystickButton(secondary, 12);
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
@@ -113,6 +116,7 @@ public class RobotContainer {
         manualOuttake.debounce(0.1)
             .whileTrue(s_Intake.new ChangeState(IntakeState.SPIT))
             .onFalse(s_Intake.new ChangeState(IntakeState.STOW));
+        deflectorTest.whileTrue(s_Deflector.new ChangeState(DeflectorState.UP)).onFalse(s_Deflector.new ChangeState(DeflectorState.DOWN));
     }
 
     public Command getAutonomousCommand() {
