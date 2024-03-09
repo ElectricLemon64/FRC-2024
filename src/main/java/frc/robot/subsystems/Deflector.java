@@ -17,18 +17,18 @@ public class Deflector extends SubsystemBase{
     public Deflector(){
         angleMotorControllerL = new CANSparkMax(Constants.DeflectorConstants.angleMotorIDL, MotorType.kBrushless);
         angleMotorControllerR = new CANSparkMax(Constants.DeflectorConstants.angleMotorIDR, MotorType.kBrushless);
-        angleMotorControllerR.follow(angleMotorControllerL);
-        angleMotorControllerR.setInverted(true);
+        angleMotorControllerR.follow(angleMotorControllerL, true);
+        //angleMotorControllerR.setInverted(true);
     }
 
     /** @return radians */
     public double getPitch() {
-        return Units.rotationsToRadians(angleMotorControllerL.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle).getPosition());
+        return Units.rotationsToRadians(angleMotorControllerL.getEncoder().getPosition());
     }
     
     /** @param goalPitch radians */
     private void setGoalPitch(double goalPitch) {
-        angleMotorControllerL.getPIDController().setReference(Units.radiansToRotations(goalPitch), CANSparkBase.ControlType.kSmartMotion);
+        angleMotorControllerL.getPIDController().setReference(Units.radiansToRotations(goalPitch), CANSparkBase.ControlType.kPosition);
     }
 
     public class ChangeState extends Command{
